@@ -8,15 +8,16 @@ Node.js
 #### initialization
 ```
 />
+    npm install
     cd src/GUI
-    npm install -y
+    npm install
 ```
 #### compile
 ```
-src/GUI/>
+./>
     npm run dev
 ```
-#### making a distribution
+#### make a distribution
 ```
 (use administrator)
 src/GUI/>

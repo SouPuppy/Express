@@ -4,7 +4,7 @@
   "description": "An Editor",
   "main": "index.js",
   "scripts": {
-    "build_cmake": "cmake-js build -O build/Cmake",
+    "build_cmake": "cmake-js configure -O  build/Cmake && cmake-js build -O build/Cmake",
     "build_GUI": "cd src/GUI && npm run build",
     "dev_GUI": "cd src/GUI && npm run dev",
     "build": "npm run build_cmake",

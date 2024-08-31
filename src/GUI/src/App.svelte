@@ -1,33 +1,38 @@
 <script>
-	export let name;
 
-	let result1 = 0;
-	let result2 = 0;
-	let errmsg = "";
+	export let name;
+	
+	
+	let chromeVersion = '';
+	let nodeVersion = '';
+	let electronVersion = '';
+	
+	
+	let f_result = '';
+    let fruits = '';
 
 	import { onMount } from 'svelte';
-	onMount(() => {
-		if (window.myAPI) {
-			result1 = window.myAPI.mytest();
-			result2 = window.myAPI.youtest('aaa', 'bbb');
-		} else {
-			errmsg = "No myAPI in window";
+	onMount( async () => {  console.log("Checking APIs...");
+		if (window.versions) {
+			chromeVersion   = window.versions.chrome();
+			nodeVersion     = window.versions.node();
+			electronVersion = window.versions.electron();
 		}
+		f_result = await window.external_addons.f();
+        fruits  = await window.external_addons.g('Apple', 'Banana');
 	});
+
+	
 
 </script>
 
+
 <main>
-	<h1>Hello {name}!</h1>
-	
-	<p>Result 1: {result1}</p>
-	<p>Result 2: {result2}</p>
-	<p>Error: {errmsg}</p>
-
-
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+	<h1>Hello from {f_result}</h1>
+	<p>function g: {fruits}</p>
+	<p>
+		This app is using Chrome ({chromeVersion}), Node.js ({nodeVersion}), and Electron ({electronVersion}).
+	</p>
 </main>
 
 <style>

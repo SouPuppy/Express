@@ -1,23 +1,17 @@
-window.addEventListener('DOMContentLoaded', () => {
-  mainWindow.webContents.openDevTools();
-    const replaceText = (selector, text) => {
-      const element = document.getElementById(selector)
-      if (element) element.innerText = text
-    }
-  
-    for (const dependency of ['chrome', 'node', 'electron']) {
-      replaceText(`${dependency}-version`, process.versions[dependency])
-    }
-  })
+const { contextBridge, ipcRenderer } = require('electron');
 
-const { contextBridge } = require('electron');
-const addon = require('./build/Cmake/Release/addons.node');
-  
-contextBridge.exposeInMainWorld('myAPI', {
-  mytest: () => {
-    return addon.mytest();
+contextBridge.exposeInMainWorld('versions', {
+  node: () => process.versions.node,
+  chrome: () => process.versions.chrome,
+  electron: () => process.versions.electron
+})
+
+contextBridge.exposeInMainWorld('external_addons', {
+  f: () => {
+    return ipcRenderer.invoke('function_f');
   },
-  youtest: (arg1, arg2) => {
-    return addon.youtest(arg1, arg2);
+  g: (arg1, arg2) => {
+    return ipcRenderer.invoke('function_g', arg1, arg2);
   }
+
 });
