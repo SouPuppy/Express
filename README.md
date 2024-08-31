@@ -1,6 +1,5 @@
 ## Dependencies
-GNU Make
-
+CMake
 Node.js
 
 ## Runtime
@@ -8,16 +7,14 @@ Node.js
 #### initialization
 ```
 />
-    npm install
-    cd src/GUI
-    npm install
+    npm run init
 ```
 #### compile
 ```
 ./>
     npm run dev
 ```
-#### make a distribution
+#### make a distribution (unfinished)
 ```
 (use administrator)
 src/GUI/>

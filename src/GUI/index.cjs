@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
-const addons = require('../../build/Cmake/Release/addons.node');
+const addons = require('../../build/CMake/Release/addons.node');
 
 
 app.on("ready", () => {
