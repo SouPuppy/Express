@@ -1,8 +1,5 @@
 <script>
-
-	export let name;
-	
-	
+	export let word;
 	let chromeVersion = '';
 	let nodeVersion = '';
 	let electronVersion = '';
@@ -21,14 +18,12 @@
 		f_result = await window.external_addons.f();
         fruits  = await window.external_addons.g('Apple', 'Banana');
 	});
-
-	
-
 </script>
 
 
 <main>
-	<h1>Hello from {f_result}</h1>
+
+	<h1>{word} from {f_result}</h1>
 	<p>function g: {fruits}</p>
 	<p>
 		This app is using Chrome ({chromeVersion}), Node.js ({nodeVersion}), and Electron ({electronVersion}).

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "index.cjs",
+  "main": "src/main/main.cjs",
   "scripts": {
     "start": "electron .",
     "build": "rollup -c",
