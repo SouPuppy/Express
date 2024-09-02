@@ -1,6 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
-const addons = require('../../build/CMake/Release/addons.node');
 
 
 app.on("ready", () => {
@@ -18,11 +17,3 @@ app.on("ready", () => {
 
     // mainWindow.webContents.openDevTools();
   });
-
-ipcMain.handle('function_f', async (event) => {
-  return addons.f();
-});
-
-ipcMain.handle('function_g', async (event, arg1, arg2) => {
-  return addons.g(arg1, arg2);
-});

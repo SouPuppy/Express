@@ -18,8 +18,6 @@
 			nodeVersion     = window.versions.node();
 			electronVersion = window.versions.electron();
 		}
-		f_result = await window.external_addons.f();
-        fruits  = await window.external_addons.g('Apple', 'Banana');
 	});
 
 	
@@ -29,7 +27,6 @@
 
 <main>
 	<h1>Hello from {f_result}</h1>
-	<p>function g: {fruits}</p>
 	<p>
 		This app is using Chrome ({chromeVersion}), Node.js ({nodeVersion}), and Electron ({electronVersion}).
 	</p>
