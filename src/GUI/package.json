@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "src/main/main.cjs",
+  "main": "src/entry/main.cjs",
   "scripts": {
     "start": "electron .",
     "build": "rollup -c",
@@ -13,6 +13,12 @@
   "build": {
     "directories": {
       "output": "../../build/GUI"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "artifactName": "${productName}-${version}.${ext}"
     }
   },
   "devDependencies": {

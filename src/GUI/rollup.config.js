@@ -5,6 +5,7 @@ import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import css from 'rollup-plugin-css-only';
+import { url } from 'inspector';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -30,7 +31,7 @@ function serve() {
 }
 
 export default {
-	input: 'src/render/main.js',
+	input: 'src/renderer/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
@@ -43,6 +44,9 @@ export default {
 				// enable run-time checks when not in production
 				dev: !production
 			}
+		}),
+		url({
+			limit: 0,
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance

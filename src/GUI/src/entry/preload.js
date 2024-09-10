@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('external_addons', {
 });
 
 contextBridge.exposeInMainWorld('windowControls', {
-  minimize: () => ipcRenderer.invoke('window-minimize'),
-  maximize: () => ipcRenderer.invoke('window-maximize'),
-  close: () => ipcRenderer.invoke('window-close')
+  minimize: () => ipcRenderer.send('window-minimize'),
+  maximize: () => ipcRenderer.send('window-maximize'),
+  close:    () => ipcRenderer.send('window-close')
 });

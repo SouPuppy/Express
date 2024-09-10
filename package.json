@@ -9,7 +9,8 @@
     "build_GUI": "cd src/GUI && npm run build",
     "dev_GUI": "cd src/GUI && npm run dev",
     "build": "npm run build_cmake",
-    "dev": "npm run build && npm run dev_GUI"
+    "dev": "npm run build && npm run dev_GUI",
+    "dist": "cd src/GUI && npm run dist"
   },
   "author": "Soupup",
   "license": "",
