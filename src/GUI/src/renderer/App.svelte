@@ -1,22 +1,22 @@
 <script>
-    import TopBar from './components/TopBar.svelte';
-	import TestInfo from './TestInfo.svelte';
+    import TopBar from "./components/TopBar.svelte";
+	import Demo from "./pages/demo.svelte";
 </script>
 
 
 <main>
-	<TopBar></TopBar>
-	<div class="contentArea">
-		<TestInfo></TestInfo>
+	<TopBar/>
+	<div class="TextArea">
+		<Demo/>
 	</div>
-
 </main>
 
 <style>
-	.contentArea {
+	.TextArea {
+		height: 100%;
 		display: flex;
         flex-direction: row;
-        flex-grow: 1; /* Ensure contentArea takes up remaining space */
+        flex-grow: 1; 	/* Ensure TextArea takes up remaining space */
         overflow: auto; /* Optional: scroll if content overflows */
 	}
 </style>
