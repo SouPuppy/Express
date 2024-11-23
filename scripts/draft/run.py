@@ -8,7 +8,6 @@ from utils import load_data
 
 # import src.DEhance_Model as DEhance_Model
 
-
 from src.Models import diffusionModel
 from src.Models import referenceModel
 from src.Models import WAllocateModel
@@ -55,10 +54,9 @@ test_labels = load_data.load(dataset_path['test_label'])
 
 # Training Configs
 
-diffusionModel = diffusionModel.RDDM()    # default, RDDM
-# diffusionModel = diffusionModel.default()   # default, RDDM
-# referenceModel = referenceModel.default()   # default
-# WAllocateModel = WAllocateModel.default()   # default
+diffusionModel = diffusionModel.RDDM    # default, RDDM
+# referenceModel = referenceModel.default   # default
+# WAllocateModel = WAllocateModel.default   # default
 
 # Stage I Configs
 

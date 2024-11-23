@@ -15,7 +15,10 @@ import torch
 import torch.nn.functional as F
 import torchvision.transforms.functional as TF
 from accelerate import Accelerator
-from datasets.get_dataset import dataset
+
+# from datasets.get_dataset import dataset
+from src.datasets.get_dataset import dataset
+
 from einops import rearrange, reduce
 from einops.layers.torch import Rearrange
 from ema_pytorch import EMA
