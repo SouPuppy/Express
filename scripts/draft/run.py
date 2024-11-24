@@ -157,7 +157,6 @@ Stage_I_trainer = Stage1_Trainer(
     ema_decay       = STAGE_I_DIFFUSION_TRAINER_CONFIG.ema_decay,
 
     debug = DEBUG_MODE,
-    device = device
 )
 
 # Stage_II_trainer = Stage2_Trainer(
@@ -175,7 +174,8 @@ Stage_I_trainer = Stage1_Trainer(
 
 # # Stage I
 
-# Stage_I_trainer.load(mileStone = -1)
+Stage_I_trainer.save(mileStone=12)
+# Stage_I_trainer.load(mileStone=0)
 # Stage_I_trainer.train()
 
 # # Stage II

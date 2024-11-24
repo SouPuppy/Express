@@ -6,9 +6,9 @@ from .residual_denoising_diffusion_pytorch import (ResidualDiffusion,
 
 class RDDM:
     def __init__(self, channel, img_size):
-        log(f""" --- loading RDDM ---
-            channel = {channel}
-            img_size = {img_size}
+        log(f"""loading RDDM
+            - channel = {channel}
+            - img_size = {img_size}
 """)
         self.img_size = img_size
         condition = True

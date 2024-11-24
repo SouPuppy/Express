@@ -42,6 +42,6 @@ def log(message="", level='info'):
 
     # Use the color code for the level
     color = COLOR_CODES.get(level, COLOR_CODES['reset'])
-    print(f"[{color}{level}{COLOR_CODES['reset']}]\t>  {message}")
+    print(f"[{color}{level}{COLOR_CODES['reset']}] >  {message}")
 
 log(f"Start logging, writing in {log_filename}")
