@@ -174,8 +174,8 @@ Stage_I_trainer = Stage1_Trainer(
 
 # # Stage I
 
-Stage_I_trainer.save(mileStone=12)
-# Stage_I_trainer.load(mileStone=0)
+Stage_I_trainer.save(mileStone=2)
+Stage_I_trainer.load(mileStone=-1)
 # Stage_I_trainer.train()
 
 # # Stage II

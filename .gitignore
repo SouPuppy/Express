@@ -1,5 +1,4 @@
 .conda
 logs
-*.pyc
-*.pyo
+**.pt
 __pycache__/
