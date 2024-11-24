@@ -1,2 +1,5 @@
 .conda
 logs
+*.pyc
+*.pyo
+__pycache__/

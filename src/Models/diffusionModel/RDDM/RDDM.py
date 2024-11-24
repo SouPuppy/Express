@@ -1,23 +1,21 @@
 from common.auto_logger import log
 
-log("loading RDDM...")
-
 from .residual_denoising_diffusion_pytorch import (ResidualDiffusion,
                                                       Unet, UnetRes,
                                                       set_seed)
 
 class RDDM:
-    def __init__(self, channel, img_size, debug, device):
-        print(f"channel {channel}")
-        print(f"img_size {img_size}")
-        print(f"debug {debug}")
-        print(f"device {device}")
-        
+    def __init__(self, channel, img_size):
+        log(f""" --- loading RDDM ---
+            channel = {channel}
+            img_size = {img_size}
+""")
+        self.img_size = img_size
         condition = True
         input_condition = False
         input_condition_mask = False
         sum_scale = 1
-
+        
         self.model = UnetRes(
             dim=64,
             dim_mults=(1, 2, 4, 8),
@@ -25,6 +23,7 @@ class RDDM:
             condition=condition,
             input_condition=input_condition
         )
+        
         self.diffusion = ResidualDiffusion(
             self.model,
             image_size=img_size,
@@ -38,4 +37,5 @@ class RDDM:
             input_condition=input_condition,
             input_condition_mask=input_condition_mask
         )
-            
+    def get_diffusionModel(self):
+        return self.diffusion

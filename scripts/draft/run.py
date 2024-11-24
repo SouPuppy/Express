@@ -1,7 +1,9 @@
+from os import read
 from common.auto_logger import log
 
 from dataclasses import dataclass
 from PIL import Image
+import torchvision.transforms.functional as F
 
 from utils import load_device
 from utils import load_data
@@ -17,11 +19,36 @@ from src.Trainers.Stage1_Trainer import trainer as Stage1_Trainer
 # import src.EvalModel as EvalModel
 
 
+
+import torch
+
+
+# DEBUG
+
+def read_image(path):
+    try:
+        img = Image.open(path).convert("RGB")
+        img_tensor = F.to_tensor(img)
+        return img_tensor
+    except Exception as e:
+        print(f"Error reading image {path}: {e}")
+        return None
+
+def show_image(img_tensor):
+    try:
+        if isinstance(img_tensor, torch.Tensor):
+            img_pil = F.to_pil_image(img_tensor)
+            img_pil.show()
+        else:
+            print("Input is not a valid tensor.")
+    except Exception as e:
+        print(f"Error displaying image: {e}")
+
+
+
 # Basic Configs
 
 DEBUG_MODE = True
-WEIGHT_FOLDER = './weights'
-RESULT_FOLDER = './results'
 
 avaliableGPU = [0, 1]
 MULTIGPU = True
@@ -46,11 +73,11 @@ dataset_path = {
 
 log("loading datasets...")
 
-train_inputs = load_data.load(dataset_path['train_cloud'])
-train_labels = load_data.load(dataset_path['train_label'])
+train_inputs_flist = load_data.load_flist(dataset_path['train_cloud'])
+train_labels_flist = load_data.load_flist(dataset_path['train_label'])
 
-test_inputs = load_data.load(dataset_path['test_cloud'])
-test_labels = load_data.load(dataset_path['test_label'])
+test_inputs_flist = load_data.load_flist(dataset_path['test_cloud'])
+test_labels_flist = load_data.load_flist(dataset_path['test_label'])
 
 # Training Configs
 
@@ -61,36 +88,18 @@ diffusionModel = diffusionModel.RDDM    # default, RDDM
 # Stage I Configs
 
 @dataclass
-class STAGE_I_DIFFUSION_CONFIG:
+class STAGE_I_DIFFUSION_TRAINER_CONFIG:
     batch_size = 1
     epoch = 10000
-    lr = 1e-4
+    learning_rate = 8e-5
     sample_step = 100
     save_per_step = 100
+
+    amp = False,
+    ema_decay = 0.995
 
 # Stage II Configs
 
-@dataclass
-class STAGE_II_DIFFUSION_CONFIG:
-    batch_size = 1
-    epoch = 10000
-    lr = 1e-4
-    sample_step = 100
-    save_per_step = 100
-
-@dataclass
-class STAGE_II_REFERENCE_CONFIG:
-    batch_size = 10
-    epoch = 10000
-    lr = 1e-4
-    save_per_step = 100
-
-@dataclass
-class STAGE_II_WEIGHTALLOC_CONFIG:
-    batch_size = 10
-    epoch = 10000
-    lr = 1e-4
-    save_per_step = 100
 
 # ---------------------------------- Training ----------------------------------
 
@@ -102,9 +111,6 @@ class STAGE_II_WEIGHTALLOC_CONFIG:
 Stage_I_diffusion = diffusionModel(
     channel     = DATASET_CONFG.channel,
     img_size    = [d // 2 for d in DATASET_CONFG.image_size], # half resolution
-
-    debug = DEBUG_MODE,
-    device = device
 )
 
 # # Stage II
@@ -113,47 +119,46 @@ Stage_I_diffusion = diffusionModel(
 # Stage_II_diffusion = diffusionModel(
 #     channel     = DATASET_CONFG.channel,
 #     img_size    = DATASET_CONFG.image_size, # full size resolution
-
-#     debug = DEBUG_MODE,
-#     device = device
 # )
 
 # Stage_II_refModel = referenceModel(
 #     channel     = DATASET_CONFG.channel,
 #     img_size    = DATASET_CONFG.image_size,
-
-#     debug = DEBUG_MODE,
-#     device = device
 # )
 
 # Stage_II_WAllocateModel = WAllocateModel(
 #     channel     = DATASET_CONFG.channel,
 #     img_size    = DATASET_CONFG.image_size,
-
-#     debug = DEBUG_MODE,
-#     device = device
 # )
 
 # Stage_II_DE_Model = DEhance_Model(
 #     diffusionModel = Stage_II_diffusion,
 #     referenceModel = Stage_II_refModel,
 #     WAllocateModel = Stage_II_WAllocateModel,
-
-#     debug = DEBUG_MODE,
-#     device = device
 # )
 
 # # Trainers
 
-# Stage_I_trainer = Stage1_Trainer(
-    # model = Stage_I_diffusion,
-    
-    # inputs = F.interpolate(inputs, scale_factor=0.5, mode='bilinear', align_corners=False),
-    # labels = F.interpolate(labels, scale_factor=0.5, mode='bilinear', align_corners=False),
+# show_image(read_image(train_inputs_flist[0]))
 
-    # debug = DEBUG_MODE,
-    # device = device
-# )
+Stage_I_trainer = Stage1_Trainer(
+    model = Stage_I_diffusion,
+    
+    inputs_flist = train_inputs_flist,
+    labels_flist = train_labels_flist,
+
+    epoch           = STAGE_I_DIFFUSION_TRAINER_CONFIG.epoch,
+    batch_size      = STAGE_I_DIFFUSION_TRAINER_CONFIG.batch_size,
+    learning_rate   = STAGE_I_DIFFUSION_TRAINER_CONFIG.learning_rate,
+    sample_step     = STAGE_I_DIFFUSION_TRAINER_CONFIG.sample_step,
+    save_per_step   = STAGE_I_DIFFUSION_TRAINER_CONFIG.save_per_step,
+
+    amp             = STAGE_I_DIFFUSION_TRAINER_CONFIG.amp,
+    ema_decay       = STAGE_I_DIFFUSION_TRAINER_CONFIG.ema_decay,
+
+    debug = DEBUG_MODE,
+    device = device
+)
 
 # Stage_II_trainer = Stage2_Trainer(
 #     model = Stage_II_DE_Model,

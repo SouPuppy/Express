@@ -6,7 +6,7 @@ from pathlib import Path
 
 exts = ['jpg', 'png', 'jpeg']
 
-def load(flist_path):
+def load_flist(flist_path):
     # if flist_path like "*.flist"
     if flist_path.endswith(".flist"):
         log("loading dataset from flist: {}".format(flist_path))

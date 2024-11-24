@@ -14,7 +14,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import torchvision.transforms.functional as TF
-from accelerate import Accelerator
+# from accelerate import Accelerator
 
 # from datasets.get_dataset import dataset
 from src.datasets.get_dataset import dataset
